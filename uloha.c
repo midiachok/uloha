@@ -11,7 +11,7 @@ korene[i]=rand()%21-10; //ale to bude integer, moj buduci problem
 }
 
 /*generujeme koeficienty rovnice podla vygenerovanych korenov
-...
+tu sa pouzije Vietov vztah ale ako?? a co s tymi nasobnostami!!
 */
 
 /*ulozime tieto koeficienty do pola q?
@@ -29,6 +29,19 @@ aspon nejakych koeficientov. ak ano tak mame kod uspechu.
 mozne podmienky na overovanie: 1. ci k<=rad  2. ci urcite polynom ma k korenov (ak hodnota polynomu
 sa = 0, tak je koren, a k vtedy ++)
 */
+
+char pocet_korenov = 0;
+    for (float x = -10.0; x <= 10.0; x += 0.01) {
+        if (hodnota_polynomu(q, rad, x) == 0.0) {
+            pocet_korenov++;
+        }
+    }
+
+if(k<=rad&&pocet_korenov==k){
+return 1; //uspech
+    } else {
+        return 0; //neuspech
+    }
 
 /*ak kod uspechu tak vypisat polynom
 ak neuspechu tak napisat ze polynom neexistuje
