@@ -5,7 +5,7 @@
 char nahodny_polynom(float *q,char rad,char k){
 
 //generujeme nejake k korenov
-float korene[k];
+float* korene = calloc(k, sizeof(float));
 for(int i=0;i<rad;i++){
 korene[i]=rand()%21-10; //ale to bude integer, moj buduci problem
 }
@@ -63,6 +63,8 @@ ak neuspechu tak napisat ze polynom neexistuje
 int main(){
 
 char rad,k;
+
+float* q = calloc(rad + 1, sizeof(float));
 
 printf("Zadajte stupen polynomu: ");
     scanf("%c", &rad);
