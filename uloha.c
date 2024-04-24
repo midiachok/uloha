@@ -4,19 +4,37 @@
 
 char nahodny_polynom(float *q,char rad,char k){
 
+if(k>rad)
+return 0;
+
+do{
+
+
+
 //generujeme nejake k korenov
 float* korene = calloc(k, sizeof(float));
-for(int i=0;i<rad;i++){
-korene[i]=rand()%21-10; //ale to bude integer, moj buduci problem
+for(int j=0;j<k;j++){
+korene[j]=rand()%21-10;
 }
 
 /*generujeme koeficienty rovnice podla vygenerovanych korenov
 tu sa pouzije Vietov vztah ale ako?? a co s tymi nasobnostami!!
 */
 
-/*ulozime tieto koeficienty do pola q?
-...
-*/
+for(int i=rad;i>=0;i--){
+        q[i]=0; 
+
+       
+        for(int j=0;j<=k;j++){
+            
+            if(i!=j){
+                if(q[i]==0){
+                    q[i]=1; 
+                }
+                q[i]*=-korene[j];
+            }
+        }
+    }
 
 /*overujeme dve podmienky ktore zistia ci ma uloha riesenie (vtedy oznamime kod (ne)uspechu
 spravne rozumiem ze 'uloha ma riesenie' nehovori o korenoch teda nemusi kod hovorit ci mame 
@@ -45,12 +63,8 @@ char pocet_korenov = 0;
         }
     }
 
-if(k<=rad&&pocet_korenov==k){
-return 1; //uspech
-    } else {
-        return 0; //neuspech
-    }
-
+}while(pocet_korenov!=k);
+return 1;
 /*ak kod uspechu tak vypisat polynom
 ak neuspechu tak napisat ze polynom neexistuje
 */
@@ -61,18 +75,18 @@ ak neuspechu tak napisat ze polynom neexistuje
 
 
 int main(){
+srand(time(0));
+char rad=0,k=0;
 
-char rad,k;
-
-float* q = calloc(rad + 1, sizeof(float));
 
 printf("Zadajte stupen polynomu: ");
     scanf("%c", &rad);
     printf("Zadajte pocet korenov: ");
     scanf(" %c", &k);
+float* q = calloc(rad + 1, sizeof(float));
     
     if (nahodny_polynom(q,rad,k)){
-    for (i=0;i<=rad;i++){
+    for (int i=0;i<=rad;i++){
             printf("%fx^%c",q[i],rad-i);
         }
         printf("=0\n");
@@ -80,5 +94,5 @@ printf("Zadajte stupen polynomu: ");
         printf("Nepodarilo sa vygenerovat polynom");
     }
 
-
+free(q);
 }
