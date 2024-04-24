@@ -30,6 +30,14 @@ mozne podmienky na overovanie: 1. ci k<=rad  2. ci urcite polynom ma k korenov (
 sa = 0, tak je koren, a k vtedy ++)
 */
 
+float hodnota_polynomu(float *q,char rad,float x) {
+    float hodnota=q[0];
+    for(char i=1;i<=rad;i++){
+        hodnota=hodnota*x+q[i];
+    }
+    return hodnota;
+}
+
 char pocet_korenov = 0;
     for (float x = -10.0; x <= 10.0; x += 0.01) {
         if (hodnota_polynomu(q, rad, x) == 0.0) {
@@ -48,4 +56,27 @@ ak neuspechu tak napisat ze polynom neexistuje
 */
 
 /*a toto vsetko zatial bez algebraickych nasobnosti!!!*/
+}
+
+
+
+int main(){
+
+char rad,k;
+
+printf("Zadajte stupen polynomu: ");
+    scanf("%c", &rad);
+    printf("Zadajte pocet korenov: ");
+    scanf(" %c", &k);
+    
+    if (nahodny_polynom(q,rad,k)){
+    for (i=0;i<=rad;i++){
+            printf("%fx^%c",q[i],rad-i);
+        }
+        printf("=0\n");
+    }else{
+        printf("Nepodarilo sa vygenerovat polynom");
+    }
+
+
 }
