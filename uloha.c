@@ -4,23 +4,45 @@
 
 char nahodny_polynom(float *q,short rad,short k){
 
-if(k>rad){
+if(k>rad && ((rad%2==0 && k%2==0)||(rad%2!=0 && k%2!=0)) ){
 return 0;
 }
 
 //generujeme nejake k korenov
 float* korene = calloc(k, sizeof(float));
-for(int j=0;j<k;j++){
-korene[j]=rand()%21-10; //ale integer!
+for(int j=0;j<k;j++){ 
+korene[j]=(float)(rand()%21-10); //?
 }
+if(k<rad)
+korene[0]=0.;
 
-/*funkcia na nasobenie polynomov*/
+for(int j=0;j<k;j++){ 
+printf("%f ",korene[j]);
+}
+printf("\n");
 
-/*generujeme koeficienty rovnice podla vygenerovanych korenov
+
+/*???
+funkcia na nasobenie polynomov*/
+
+/*???
+generujeme koeficienty rovnice podla vygenerovanych korenov
 REZIDUUM
 */
 
 
+void vypKoef(float *korene,short k,float* q){
+
+    q[0]=1; 
+
+    for(int i=0;i<k;i++){
+        for(int j=i;j>=0;j--){
+            q[j+1]-=korene[i]*q[j];
+        }
+    }
+}
+vypKoef(korene,k,q);
+return 1;
 
 /*overujeme dve podmienky ktore zistia ci ma uloha riesenie (vtedy oznamime kod (ne)uspechu
 spravne rozumiem ze 'uloha ma riesenie' nehovori o korenoch teda nemusi kod hovorit ci mame 
@@ -60,7 +82,7 @@ float* q = calloc(rad + 1, sizeof(float));
     
     if (nahodny_polynom(q,rad,k)){
     for (int i=0;i<=rad;i++){
-            printf("%fx^%hd",q[i],rad-i);
+            printf("%fx^%hd ",q[i],rad-i);
         }
         printf("=0\n");
     }else{
