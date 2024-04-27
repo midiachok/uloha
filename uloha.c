@@ -4,8 +4,22 @@
 
 char nahodny_polynom(float *q,short rad,short k){
 
-if(k>rad && ((rad%2==0 && k%2==0)||(rad%2!=0 && k%2!=0)) ){
+if((k>rad || (rad%2!=0 && k%2==0)||(rad%2==0 && k%2!=0) )&&k!=0){
 return 0;
+}
+else if(k==0){
+q[rad]=1;
+
+
+for(int i=0;i<rad;i++){
+
+q[i]=(float)(rand()%21-10);
+q[rad]*= -q[i];
+}
+
+
+
+return 1;
 }
 
 //generujeme nejake k korenov
@@ -16,8 +30,9 @@ korene[j]=(float)(rand()%21-10); //?
 if(k<rad)
 korene[0]=0.;
 
+printf("Korene su:\n");
 for(int j=0;j<k;j++){ 
-printf("%f ",korene[j]);
+printf("%.0f \n",korene[j]);
 }
 printf("\n");
 
@@ -42,6 +57,7 @@ void vypKoef(float *korene,short k,float* q){
     }
 }
 vypKoef(korene,k,q);
+  printf("Rovnica: ");
 return 1;
 
 /*overujeme dve podmienky ktore zistia ci ma uloha riesenie (vtedy oznamime kod (ne)uspechu
@@ -80,9 +96,10 @@ printf("Zadajte stupen polynomu: ");
     scanf(" %hd", &k);
 float* q = calloc(rad + 1, sizeof(float));
     
+    
     if (nahodny_polynom(q,rad,k)){
     for (int i=0;i<=rad;i++){
-            printf("%fx^%hd ",q[i],rad-i);
+            printf("%.0fx^%hd ",q[i],rad-i);
         }
         printf("=0\n");
     }else{
