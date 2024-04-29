@@ -2,14 +2,25 @@
 #include <stdlib.h>
 #include <time.h>
 
+void vypKoef(float *korene,short k,float* q){
+
+    q[0]=1; 
+
+    for(int i=0;i<k;i++){
+        for(int j=i;j>=0;j--){
+            q[j+1]-=korene[i]*q[j];
+        }
+    }
+}
+
+
 char nahodny_polynom(float *q,short rad,short k){
 
-if((k>rad || (rad%2!=0 && k%2==0)||(rad%2==0 && k%2!=0) )&&k!=0){
+if((k>rad || (rad%2!=0 && k%2==0)||(rad%2==0 && k%2!=0) )&&k!=0){//?
 return 0;
 }
 else if(k==0){
 q[rad]=1;
-
 
 for(int i=0;i<rad;i++){
 
@@ -17,18 +28,33 @@ q[i]=(float)(rand()%21-10);
 q[rad]*= -q[i];
 }
 
-
-
 return 1;
 }
 
 //generujeme nejake k korenov
 float* korene = calloc(k, sizeof(float));
-for(int j=0;j<k;j++){ 
-korene[j]=(float)(rand()%21-10); //?
+if(k<rad) 
+korene[0]=(float)0.;
+else
+korene[0]=(float)(rand()%21-10);
+
+float koren;
+for(int j=1;j<k;j++){
+ 
+koren=(float)(rand()%21-10);
+char flag=1;
+
+for(int i=0;i<k;i++){
+
+if(korene[i]==koren){
+flag=0;
+break;
 }
-if(k<rad)
-korene[0]=0.;
+
+}
+if(flag) korene[j]=koren;
+else j--;
+}
 
 printf("Korene su:\n");
 for(int j=0;j<k;j++){ 
@@ -46,16 +72,7 @@ REZIDUUM
 */
 
 
-void vypKoef(float *korene,short k,float* q){
 
-    q[0]=1; 
-
-    for(int i=0;i<k;i++){
-        for(int j=i;j>=0;j--){
-            q[j+1]-=korene[i]*q[j];
-        }
-    }
-}
 vypKoef(korene,k,q);
   printf("Rovnica: ");
 return 1;
