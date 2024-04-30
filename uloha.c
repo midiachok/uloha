@@ -7,8 +7,8 @@ void vypKoef(float *korene,short k,float* q){
      if(k!=0)
      q[0]=1; 
      for(int i=0;i<k;i++){
-     for(int j=i;j>=0;j--){
-     q[j+1]-=korene[i]*q[j];
+          for(int j=i;j>=0;j--){
+               q[j+1]-=korene[i]*q[j];
 }
 }
 }
