@@ -29,14 +29,18 @@ void vyp_koef_kv(float* a, float* b, float* c) {
 
 
 char nahodny_polynom(float* q, short rad, short k, float* koef) {
+     if(q == NULL && koef == NULL)
+          return 0;
      float* korene = calloc(k, sizeof(float));    /*bude sa generovat nejake k korenov*/
+     if(korene == NULL) 
+          return 0;
      float koren;
      char flag = 1;
      int poc_pol = (rad - k) / 2;  /*pocet polynomov rezidua*/
-     float** quadratics = (float **)malloc((poc_pol) * sizeof(float *));    /*pole pre polia s troma koeficientmi pre kazdy pol z rezidua (alokovali pamat pre polynomy)*/
-     
-     if ((k > rad || (rad % 2 != 0 && k % 2 == 0) || (rad % 2 == 0 && k % 2 != 0)) && k != 0)    /*podmienky, podla ktorych polynom sa nevygeneruje */
+     if ((k > rad || (rad % 2 != 0 && k % 2 == 0) || (rad % 2 == 0 && k % 2 != 0)) && k != 0) {    /*podmienky, podla ktorych polynom sa nevygeneruje */
           return 0;
+          free(korene);
+     }
 
      if (k != 0) {
           if (k < rad)    /*v tomto pripade prvy koren vzdy sa rovna 0*/
@@ -71,7 +75,9 @@ char nahodny_polynom(float* q, short rad, short k, float* koef) {
      printf("\n");
   
      vyp_koef(korene, k, q);
-  
+     float** quadratics = (float **)malloc((poc_pol) * sizeof(float *));    /*pole pre polia s troma koeficientmi pre kazdy pol z rezidua (alokovali pamat pre polynomy)*/
+     if(quadratics == NULL) 
+          return 0;
      if (k != rad) {/*praca s reziduom*/
           
           for (int i = 0; i < poc_pol; i++) {     
@@ -82,6 +88,11 @@ char nahodny_polynom(float* q, short rad, short k, float* koef) {
           }
      }
      printf("Rovnica: ");
+     if(korene != NULL)
+          free(korene);
+     for(int i = 0; i < poc_pol; i++)
+          free(quadratics[i]);
+     free(quadratics);
      return 1;
 }
   
