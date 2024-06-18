@@ -25,7 +25,7 @@ void vyp_koef_kv(float* a, float* b, float* c) {
     *c = ((*b) * (*b) - D) / (4 * (*a));
 }
 
-/*nasob dva polynomy*/
+/*nasob dva polynomy */
 void multiply_poly(float* A, int degA, float* B, int degB, float* result) {
     for (int i = 0; i <= degA + degB; i++) {
         result[i] = 0;
